@@ -22,7 +22,7 @@ client:
 
   # Which organization does this application instance belong to? The value must be the name of an org
   # defined under "organizations"
-  organization: org1
+  organization: orgAccountant
 
   logging:
     level: info
@@ -65,7 +65,7 @@ client:
 
   # Root of the MSP directories with keys and certs.
   cryptoconfig:
-    path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config
+    path: ${GOPATH}/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config
 
   # Some SDKs support pluggable KV stores, the properties under "credentialStore"
   # are implementation specific
@@ -119,7 +119,7 @@ channels:
 
     # Required. list of peers from participating orgs
     peers:
-      peer0.org1.example.com:
+      peer0.orgAccountant.example.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -138,7 +138,7 @@ channels:
         # produce events but the app typically only needs to connect to one to listen to events.
         # Default: true
         eventSource: true
-      peer0.org2.example.com:
+      peer0.orgStaff.example.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -164,9 +164,9 @@ channels:
       #[Optional] options for retrieving channel configuration blocks
       queryChannelConfig:
         #[Optional] min number of success responses (from targets/peers)
-        minResponses: 1
+        minResponses: 0
         #[Optional] channel config will be retrieved for these number of random targets
-        maxTargets: 1
+        maxTargets: 0
         #[Optional] retry options for query config block
         retryOpts:
           #[Optional] number of retry attempts
@@ -182,15 +182,15 @@ channels:
 # list of participating organizations in this network
 #
 organizations:
-  org1:
-    mspid: Org1MSP
+  orgAccountant:
+    mspid: OrgAccountantMSP
 
     # This org's MSP store (absolute path or relative to client.cryptoconfig)
-    cryptoPath:  peerOrganizations/org1.example.com/users/{username}@org1.example.com/msp
+    cryptoPath:  peerOrganizations/orgAccountant.example.com/users/{username}@orgAccountant.example.com/msp
 
     peers:
-      - peer0.org1.example.com
-      - peer1.org1.example.com
+      - peer0.orgAccountant.example.com
+      - peer1.orgAccountant.example.com
 
     # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
     # network. Typically certificates provisioning is done in a separate process outside of the
@@ -198,24 +198,24 @@ organizations:
     # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
     # Fabric-CA servers.
     certificateAuthorities:
-      - ca.org1.example.com
+      - ca.orgAccountant.example.com
 
   # the profile will contain public information about organizations other than the one it belongs to.
   # These are necessary information to make transaction lifecycles work, including MSP IDs and
   # peers with a public URL to send transaction proposals. The file will not contain private
   # information reserved for members of the organization, such as admin key and certificate,
   # fabric-ca registrar enroll ID and secret, etc.
-  org2:
-    mspid: Org2MSP
+  orgStaff:
+    mspid: OrgStaffMSP
 
     # This org's MSP store (absolute path or relative to client.cryptoconfig)
-    cryptoPath:  peerOrganizations/org2.example.com/users/{username}@org2.example.com/msp
+    cryptoPath:  peerOrganizations/orgStaff.example.com/users/{username}@orgStaff.example.com/msp
 
     peers:
-      - peer0.org2.example.com
+      - peer0.orgStaff.example.com
 
     certificateAuthorities:
-      - ca.org2.example.com
+      - ca.orgStaff.example.com
 
   # Orderer Org name
   ordererorg:
@@ -233,7 +233,7 @@ organizations:
 #
 orderers:
   orderer.example.com:
-    url: orderer.example.com:7050
+    url: grpcs://orderer.example.com:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
@@ -251,19 +251,19 @@ orderers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+      path: ${GOPATH}/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
 # and event listener registration.
 #
 peers:
-  peer0.org1.example.com:
+  peer0.orgAccountant.example.com:
     # this URL is used to send endorsement and query requests
-    url: peer0.org1.example.com:7051
+    url: grpcs://localhost:7051
 
     grpcOptions:
-      ssl-target-name-override: peer0.org1.example.com
+      ssl-target-name-override: peer0.orgAccountant.example.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -276,16 +276,16 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: /home/suyyus/go/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgAccountant.example.com/tlsca/tlsca.orgAccountant.example.com-cert.pem
 
-  peer1.org1.example.com:
+  peer1.orgAccountant.example.com:
     # this URL is used to send endorsement and query requests
-    url: peer1.org1.example.com:8050
+    url: grpcs://localhost:8050
 
     grpcOptions:
-      ssl-target-name-override: peer1.org1.example.com
+      ssl-target-name-override: peer1.orgAccountant.example.com
       # These parameters should be set in coordination with the keepalive policy on the server,
-      # as incompatible settings can result in closing of connection.
+      # as incompatible settings can result in closing Sof connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
       keep-alive-time: 0s
       keep-alive-timeout: 20s
@@ -296,12 +296,12 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: /home/suyyus/go/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgAccountant.example.com/tlsca/tlsca.orgAccountant.example.com-cert.pem
 
-  peer0.org2.example.com:
-    url: peer0.org2.example.com:9050
+  peer0.orgStaff.example.com:
+    url: grpcs://localhost:9051
     grpcOptions:
-      ssl-target-name-override: peer0.org2.example.com
+      ssl-target-name-override: peer0.orgStaff.example.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -311,61 +311,32 @@ peers:
       fail-fast: false
       # allow-insecure will be taken into consideration if address has no protocol defined, if true then grpc or else grpcs
       allow-insecure: false
-
     tlsCACerts:
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
-
+      path: /home/suyyus/go/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgStaff.example.com/tlsca/tlsca.orgStaff.example.com-cert.pem
+      
+      
 entityMatchers:
   peer:
-    - pattern: peer0.org1.example.(\w+)
-      urlSubstitutionExp: localhost:7051
-      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
-      mappedHost: peer0.org1.example.com
-
-    - pattern: peer1.org1.example.(\w+)
-      urlSubstitutionExp: localhost:8051
-      sslTargetOverrideUrlSubstitutionExp: peer1.org1.example.com
-      mappedHost: peer1.org1.example.com
-
-    - pattern: peer0.org2.example.(\w+)
-      urlSubstitutionExp: localhost:9051
-      sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
-      mappedHost: peer0.org2.example.com
-
-    - pattern: peer1.org2.example.(\w+)
-      urlSubstitutionExp: localhost:10051
-      sslTargetOverrideUrlSubstitutionExp: peer1.org2.example.com
-      mappedHost: peer1.org2.example.com
-
-    - pattern: (\w+).org1.example.(\w+):(\d+)
-      urlSubstitutionExp: localhost:$2
-      sslTargetOverrideUrlSubstitutionExp: $1.org1.example.com
-      mappedHost: $1.org1.example.com
-
-    - pattern: (\w+).org2.example.(\w+):(\d+)
-      urlSubstitutionExp: localhost:$2
-      sslTargetOverrideUrlSubstitutionExp: $1.org2.example.com
-      mappedHost: $1.org2.example.com
 
     - pattern: (\w+):7051
-      urlSubstitutionExp: localhost:7051
-      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
-      mappedHost: peer0.org1.example.com
+      urlSubstitutionExp: grpcs://localhost:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.orgAccountant.example.com
+      mappedHost: peer0.orgAccountant.example.com
 
     - pattern: (\w+):8051
-      urlSubstitutionExp: localhost:8051
-      sslTargetOverrideUrlSubstitutionExp: peer1.org1.example.com
-      mappedHost: peer1.org1.example.com
+      urlSubstitutionExp: grpcs://localhost:8051
+      sslTargetOverrideUrlSubstitutionExp: peer1.orgAccountant.example.com
+      mappedHost: peer1.orgAccountant.example.com
 
     - pattern: (\w+):9051
-      urlSubstitutionExp: localhost:9051
-      sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
-      mappedHost: peer0.org2.example.com
+      urlSubstitutionExp: grpcs://localhost:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0.orgStaff.example.com
+      mappedHost: peer0.orgStaff.example.com
 
     - pattern: (\w+):10051
-      urlSubstitutionExp: localhost:10051
-      sslTargetOverrideUrlSubstitutionExp: peer1.org2.example.com
-      mappedHost: peer1.org2.example.com
+      urlSubstitutionExp: grpcs://localhost:10051
+      sslTargetOverrideUrlSubstitutionExp: peer1.orgStaff.example.com
+      mappedHost: peer1.orgStaff.example.com
 
   orderer:
 

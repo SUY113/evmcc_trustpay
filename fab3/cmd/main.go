@@ -119,6 +119,8 @@ func runFab3(cmd *cobra.Command, args []string) error {
 	}
 
 	clientChannelContext := sdk.ChannelContext(ch, fabsdk.WithUser(user), fabsdk.WithOrg(org))
+        fmt.Println("User:", user)
+        fmt.Println("Org:", org)
 	client, err := channel.New(clientChannelContext)
 	if err != nil {
 		sdk.Close()
