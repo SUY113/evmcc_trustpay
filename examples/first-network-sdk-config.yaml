@@ -65,7 +65,7 @@ client:
 
   # Root of the MSP directories with keys and certs.
   cryptoconfig:
-    path: ${GOPATH}/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config
+    path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config
 
   # Some SDKs support pluggable KV stores, the properties under "credentialStore"
   # are implementation specific
@@ -108,7 +108,7 @@ client:
 #
 channels:
   # name of the channel
-  mychannel:
+  staffaccountant:
     # Required. list of orderers designated by the application to use for transactions on this
     # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
     # operational decisions to share loads from applications among the orderers.  The values must
@@ -251,7 +251,7 @@ orderers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+      path: ${GOPATH}/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
@@ -276,7 +276,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: /home/suyyus/go/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgAccountant.example.com/tlsca/tlsca.orgAccountant.example.com-cert.pem
+      path: /home/suyyus/go/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgAccountant.example.com/tlsca/tlsca.orgAccountant.example.com-cert.pem
 
   peer1.orgAccountant.example.com:
     # this URL is used to send endorsement and query requests
@@ -296,7 +296,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: /home/suyyus/go/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgAccountant.example.com/tlsca/tlsca.orgAccountant.example.com-cert.pem
+      path: /home/suyyus/go/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgAccountant.example.com/tlsca/tlsca.orgAccountant.example.com-cert.pem
 
   peer0.orgStaff.example.com:
     url: grpcs://localhost:9051
@@ -312,7 +312,7 @@ peers:
       # allow-insecure will be taken into consideration if address has no protocol defined, if true then grpc or else grpcs
       allow-insecure: false
     tlsCACerts:
-      path: /home/suyyus/go/src/github.com/suyyus/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgStaff.example.com/tlsca/tlsca.orgStaff.example.com-cert.pem
+      path: /home/suyyus/go/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/orgStaff.example.com/tlsca/tlsca.orgStaff.example.com-cert.pem
       
       
 entityMatchers:
