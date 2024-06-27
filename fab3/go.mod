@@ -1,5 +1,7 @@
 module github.com/hyperledger/fabric-chaincode-evm/fab3
 
+go 1.14
+
 require (
 	github.com/cloudflare/cfssl v0.0.0-20180223231731-4e2dcbde5004 // indirect; from fabric-go-sdk
 	github.com/go-kit/kit v0.9.0
